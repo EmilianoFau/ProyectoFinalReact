@@ -5,13 +5,14 @@ import Feed from "./components/Feed/feed";
 import Profile from "./components/Profile/profile";
 import Posts from "./components/Posts/posts";
 import Friends from "./components/Friends/friends";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
     <UsersProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to="/Login"/>}/>
           <Route path="/Login" element={<Login />} />
           <Route path="/MyFeed" element={<Feed />} />
           <Route path="/MyProfile" element={<Profile />} />

@@ -7,6 +7,7 @@ import { useUsers } from "../../contexts/users.jsx";
 
 const Login = () => {
     const { users, setUsers } = useUsers();
+    const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [openRegisterModal, setOpenRegisterModal] = useState(false);
     const navigate = useNavigate();
