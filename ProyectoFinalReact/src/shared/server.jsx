@@ -88,12 +88,8 @@ export async function postData(url, data) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
-            throw new Error('Error ' + response.statusText);
-        }
-
         const result = await response.json();
-        return result;
+        return { response, result };
     } catch (error) {
         console.log('Could not add the element: ', error);
     }
