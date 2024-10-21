@@ -63,3 +63,12 @@ input, textarea {
     justify-content: space-around;
     margin-top: 10px;
 }
+
+.alert {
+    color: #ff0000;
+}
+
+.emptyField {
+    border-color: #ff0000;
+    border-width: 3px;
+}
