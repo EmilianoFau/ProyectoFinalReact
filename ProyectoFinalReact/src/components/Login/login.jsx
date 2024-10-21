@@ -6,14 +6,14 @@ import { getData } from "../../shared/server.jsx";
 import { useUsers } from "../../contexts/users.jsx";
 
 const Login = () => {
-    const { users, setUsers } = useUsers();
+    // const { users, setUsers } = useUsers();
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [openRegisterModal, setOpenRegisterModal] = useState(false);
     const navigate = useNavigate();
 
     const closeModal = () => {
-        setOpenAddModal(false);
+        setOpenRegisterModal(false);
     };
 
     const handleSubmit = (e) => {
@@ -23,7 +23,8 @@ const Login = () => {
         navigate("/MyFeed");
     };
 
-    const handleRegistration = () => {
+    const handleRegistration = (e) => {
+        e.preventDefault();
         setOpenRegisterModal(true);
     };
 
@@ -46,8 +47,8 @@ const Login = () => {
                 />
                 <button type="submit">Login</button>
                 <button onClick={handleRegistration}>Register</button>
-                {openRegisterModal && <Modal closeModal={closeModal} />}
             </form>
+            {openRegisterModal && <Modal closeModal={closeModal} />}
         </div>
     );
 }
