@@ -78,14 +78,14 @@ export async function putData(url, task) {
     }
 }
 
-export async function postData(url, taskData) {
+export async function postData(url, data) {
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(taskData)
+            body: JSON.stringify(data)
         });
 
         if (!response.ok) {
