@@ -29,7 +29,7 @@ const Login = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={Styles.loginForm}>
                 <label htmlFor="user">User:</label>
                 <input
                     type="text"
