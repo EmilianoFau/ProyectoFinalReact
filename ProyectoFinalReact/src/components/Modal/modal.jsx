@@ -27,13 +27,6 @@ const Modal = ({ closeModal }) => {
         try {
             const { response, result } = await postData('http://localhost:3001/api/auth/register', newUser);
             console.log(response);
-            //Ver que devuelve response y ver logica de agregar usuario
-            /*const addedGame = response[response.length - 1];
-
-            if (addedGame && addedGame.id) {
-                console.log('Juego agregado: ', addedGame);
-                setUsers((prevUsers) => [...prevUsers, addedGame]);
-            }*/
             console.log(result);
             closeModal();
         } catch(error) {

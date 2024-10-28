@@ -1,6 +1,6 @@
-export async function getData(url) {
+export async function getData(url, headers) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, headers);
         const data = await response.json();
         return data;
     } catch (error) {

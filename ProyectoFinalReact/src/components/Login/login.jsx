@@ -34,6 +34,8 @@ const Login = () => {
             console.log(response.status)
             console.log(result);
             if (response.ok) {
+                console.log(result.token);
+                localStorage.setItem("token", result.token);
                 setShowWrongPassword(false);
                 navigate("/MyFeed");
             } else {
