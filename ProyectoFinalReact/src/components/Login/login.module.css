@@ -1,3 +1,15 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: lightblue;
+}
+
 .loginForm {
     display: flex;
     flex-direction: column;
@@ -7,4 +19,9 @@
 .wrongPassword {
     font-size: 12px;
     color: #ff0000;
+}
+
+button {
+    margin-top: 5px;
+    width: 120px;
 }

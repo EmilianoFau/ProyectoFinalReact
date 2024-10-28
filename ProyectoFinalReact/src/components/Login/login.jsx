@@ -52,7 +52,7 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className={Styles.container}>
             <form onSubmit={handleSubmit} className={Styles.loginForm}>
                 <label htmlFor="email">Email:</label>
                 <input

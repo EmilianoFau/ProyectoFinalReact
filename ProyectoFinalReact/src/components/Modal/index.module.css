@@ -5,7 +5,7 @@
     justify-content: center;
     width: 350px;
     padding: 20px;
-    background-color: rgb(34, 34, 34);
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1001;
     border-radius: 8px;
@@ -38,7 +38,7 @@ input, textarea {
 }
 
 .title {
-    color: white;
+    color: black;
 }
 
 .modalButton {
