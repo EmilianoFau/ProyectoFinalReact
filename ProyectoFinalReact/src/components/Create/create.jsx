@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { postData } from "../../shared/server";
 
 const Create = () => {
     const [image, setImage] = useState(null);
@@ -17,20 +18,25 @@ const Create = () => {
         }
 
         const formData = new FormData();
-        formData.append("file", image);
+        formData.append("image", image);
+        formData.append("caption", "Hola");
 
         try {
-            const response = await fetch('http://localhost:3001/api/posts/upload', {
-                method: "POST",
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error("Error while uploading image");
+            const token = localStorage.getItem("token");
+            console.log(token);
+            if (!token) {
+                console.error("No token found");
+                return; 
             }
 
-            const data = await response.json();
-            setMessage("Image uploaded successfully: " + data.message);
+            const result = await postData('http://localhost:3001/api/posts/upload', formData, token);
+
+            console.log(result);
+            if (!result.ok) {
+                throw new Error(result.error.message || "Error while uploading image");
+            }
+
+            setMessage("Image uploaded successfully: " + result.result.message);
         } catch (error) {
             console.error("Error while uploading image: ", error);
             setMessage("Error while uploading image");

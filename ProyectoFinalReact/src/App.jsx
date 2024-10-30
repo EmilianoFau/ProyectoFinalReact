@@ -4,10 +4,10 @@ import { PostsProvider } from "./contexts/posts";
 import Login from "./components/Login/login";
 import Feed from "./components/Feed/feed";
 import Profile from "./components/Profile/profile";
-import Posts from "./components/Posts/posts";
+import Posts from "./components/Post/post.jsx";
 import Friends from "./components/Friends/friends";
 import Navbar from "./components/Navbar/navbar";
-import Create from "./components/Create/create";
+import Create from "./components/Create/create.jsx";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 function App() {

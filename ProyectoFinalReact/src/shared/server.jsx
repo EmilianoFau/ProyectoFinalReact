@@ -78,14 +78,14 @@ export async function putData(url, task) {
     }
 }
 
-export async function postData(url, data) {
+export async function postData(url, data, token) {
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(data)
+            body: data
         });
 
         const result = await response.json();

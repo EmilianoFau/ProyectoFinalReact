@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from "react";
 import { getData } from "../../shared/server.jsx";
 import { usePosts } from "../../contexts/posts.jsx";
+import Styles from './index.module.css';
+import Post from "../Post/post.jsx";
 
 export function Feed() {
     const { posts, setPosts } = usePosts();
@@ -16,7 +18,6 @@ export function Feed() {
                 }
 
                 const data = await getData('http://localhost:3001/api/posts/feed', {
-                    method:'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -33,14 +34,15 @@ export function Feed() {
     }, []);
 
     return(
-        <div>
+
+        
+        <ul className={Styles.feed}>
             {posts.map(post => (
-                <div key={post.id}>
-                    <h3>{post.title}</h3>
-                    <p>{post.content}</p>
-                </div>
+                <li key={post.id}>
+                    <Post post={post} />
+                </li>
             ))}
-        </div>
+        </ul>
     );
 }
 
