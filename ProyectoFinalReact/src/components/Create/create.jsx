@@ -20,7 +20,7 @@ const Create = () => {
         formData.append("file", image);
 
         try {
-            const response = await fetch("/api/posts/upload", {
+            const response = await fetch('http://localhost:3001/api/posts/upload', {
                 method: "POST",
                 body: formData,
             });
