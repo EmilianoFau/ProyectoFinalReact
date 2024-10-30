@@ -3,7 +3,7 @@ import { useUsers } from "../../contexts/users";
 import { postData } from "../../shared/server";
 import Styles from './index.module.css';
 
-const Modal = ({ closeModal }) => {
+const RegisterModal = ({ closeModal }) => {
     const { setUsers } = useUsers();
 
     const [username, setUsername] = useState('');
@@ -70,4 +70,4 @@ const Modal = ({ closeModal }) => {
     )
 }
 
-export default Modal;
+export default RegisterModal;

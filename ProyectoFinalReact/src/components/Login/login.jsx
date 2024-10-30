@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "../Modal/modal.jsx";
+import Modal from "../RegisterModal/registerModal.jsx";
 import { useNavigate } from "react-router-dom";
 import Styles from "./login.module.css";
 import { getData, postData } from "../../shared/server.jsx";
