@@ -21,9 +21,9 @@ function App() {
             <Route path="/" element={<Navigate to="/Login"/>}/>
             <Route path="/Login" element={<Login />} />
             <Route path="/MyFeed" element={<Feed />} />
-            <Route path="/MyProfile" element={<Profile />} />
+            <Route path="/MyProfile" element={<Profile userId={localStorage.getItem('profileId')}/>} />
             <Route path="/MyProfile/Posts" element={<Posts />} />
-            <Route path="/FriendProfile" element={<Friends />} />
+            <Route path="/FriendProfile" element={<Friends userId={localStorage.getItem('profileId')}/>} />
             <Route path="/Create" element={<Create />} />
           </Routes>
       </UsersProvider>
