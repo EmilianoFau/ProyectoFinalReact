@@ -1,6 +1,7 @@
 import React from "react";
 import Styles from "./index.module.css";
 import { Link, useLocation } from "react-router-dom";
+import { UserRound, SquarePlus, Heart, House } from "lucide-react";
 
 const Navbar = () => {
     const location = useLocation();
@@ -12,22 +13,22 @@ const Navbar = () => {
                 <ul>
                     <li className={location.pathname === "/MyFeed" ? Styles.active : ""}>
                         <Link to="/MyFeed">
-                            <span role="img" aria-label="Home">🏠</span> Home
+                            <House />&nbsp;&nbsp;Home
                         </Link>
                     </li>
                     <li className={location.pathname === "/Notifications" ? Styles.active : ""}>
                         <Link to="/Notifications">
-                            <span role="img" aria-label="Notifications">❤️</span> Notifications
+                            <Heart />&nbsp;&nbsp;Notifications
                         </Link>
                     </li>
                     <li className={location.pathname === "/Create" ? Styles.active : ""}>
                         <Link to="/Create">
-                            <span role="img" aria-label="Create">➕</span> Create
+                            <SquarePlus />&nbsp;&nbsp;Create
                         </Link>
                     </li>
                     <li className={location.pathname === "/MyProfile" ? Styles.active : ""}>
                         <Link to="/MyProfile">
-                            <span role="img" aria-label="Profile">👤</span> Profile
+                            <UserRound />&nbsp;&nbsp;Profile
                         </Link>
                     </li>
                 </ul>

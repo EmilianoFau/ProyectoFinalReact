@@ -33,6 +33,7 @@ const Login = () => {
             const { response, result } = await postData('http://localhost:3001/api/auth/login', loginUser);
             console.log(response.status)
             console.log(result);
+            localStorage.setItem('profileId', result._id);
             if (response.ok) {
                 console.log(result.token);
                 localStorage.setItem("token", result.token);
