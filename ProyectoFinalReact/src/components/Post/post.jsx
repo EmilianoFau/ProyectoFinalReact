@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { usePosts } from "../../contexts/posts";
 import { deleteData } from "../../shared/server";
+import { Heart, MessageCircle, Send, Bookmark, Ellipsis } from "lucide-react";
 import Styles from './index.module.css';
 
 const Post = ({ post }) => {   
@@ -41,7 +42,7 @@ const Post = ({ post }) => {
             <h3>{post.user.name} <span>· {timeAgo(post.createdAt)}</span></h3>
             <img src={post.imageUrl} alt={post.caption} className={Styles.postImage} />
             <div className={Styles.icons}>
-
+                <Heart /><MessageCircle/><Send/><Bookmark/>
             </div>
             <p>{post.caption}</p>
         </div>
