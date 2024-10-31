@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -10,53 +10,11 @@
     border-radius: 8px;
 }
 
-.post {
+.feed {
+    list-style: none; 
+    background-color: white; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding: 16px; 
     width: 100%;
-    background-color: #fafafa;
-    margin: 10px 0;
-    padding: 15px;
-    border: 1px solid #dbdbdb;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.post h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.post p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-.post strong {
-    font-weight: bold;
-}
-
-.post img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.interactions {
-    margin-top: 10px;
-}
-
-.likeButton,
-.commentButton {
-    background-color: transparent;
-    border: none;
-    color: #3897f0;
-    font-size: 14px;
-    cursor: pointer;
-    margin-right: 15px;
-    transition: color 0.2s;
-}
-
-.likeButton:hover,
-.commentButton:hover {
-    color: #0056b3;
 }

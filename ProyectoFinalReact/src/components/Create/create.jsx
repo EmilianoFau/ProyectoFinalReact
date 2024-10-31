@@ -23,23 +23,22 @@ const Create = () => {
 
         try {
             const token = localStorage.getItem("token");
-            console.log(token);
             if (!token) {
                 console.error("No token found");
                 return; 
             }
 
-            const result = await postData('http://localhost:3001/api/posts/upload', formData, token);
+            const { response, result } = await postData('http://localhost:3001/api/posts/upload', formData, token);
 
-            console.log(result);
-            if (!result.ok) {
-                throw new Error(result.error.message || "Error while uploading image");
+            if (response.ok) {
+                setMessage("Image uploaded successfully");
+                console.log('Upload successful: ', result);
+            } else {
+                throw new Error(result.error?.message || "Error while uploading image");
             }
-
-            setMessage("Image uploaded successfully: " + result.result.message);
         } catch (error) {
             console.error("Error while uploading image: ", error);
-            setMessage("Error while uploading image");
+            setMessage(error.message || "Error while uploading image");
         }
     };
 

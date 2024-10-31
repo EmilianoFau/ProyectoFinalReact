@@ -39,12 +39,17 @@ const Post = ({ post }) => {
 
     return(
         <div>
-            <h3>{post.user.name} <span>· {timeAgo(post.createdAt)}</span></h3>
+            <div className={Styles.postHeader}>
+                <h3 className={Styles.username}>{post.user.username} <p className={Styles.time}>· {timeAgo(post.createdAt)}</p></h3>
+            </div>
             <img src={post.imageUrl} alt={post.caption} className={Styles.postImage} />
             <div className={Styles.icons}>
-                <Heart /><MessageCircle/><Send/><Bookmark/>
+                <Heart />
+                <MessageCircle/>
+                <Send/>
+                <Bookmark/>
             </div>
-            <p>{post.caption}</p>
+            <p className={Styles.caption}>{post.caption}</p>
         </div>
     )
 }

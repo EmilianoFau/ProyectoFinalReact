@@ -94,3 +94,20 @@ export async function postData(url, data, token) {
         console.log('Could not add the element: ', error);
     }
 }
+
+export async function postDataLogin(url, data, token) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data) 
+        });
+        const result = await response.json();
+        return { response, result };
+    } catch (error) {
+        console.log('Could not add the element: ', error);
+    }
+}
