@@ -46,6 +46,40 @@ export function Profile() {
         navigate('/MyFeed');
     }
 
+    const openEditModal = () => setShowEditModal(true);
+    const closeEditModal = () => setShowEditModal(false);
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`http://localhost:3001/api/user/profile/edit`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    profilePicture: profilePicture
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Error al actualizar el perfil');
+            }
+    
+            const data = await response.json();
+            setCurrentUser(data.user);
+            closeEditModal();
+            console.log(data.message);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+
     return (
         <div>
             <div className={Styles.backButtonContainer}>
@@ -69,7 +103,7 @@ export function Profile() {
                     <p>no existe pa</p>
                 </div>
                 <div className={Styles.editButton}>
-                    <button>Edit Profile</button>
+                    <button onClick={openEditModal()}>Edit Profile</button>
                 </div>
             </div>
             <div className={Styles.posts}>
@@ -79,6 +113,33 @@ export function Profile() {
             ) : (
                 <p className={Styles.loading}>Loading profile...</p>
             )}
+
+
+                {showEditModal && (
+                <div className={Styles.modal}>
+                    <div className={Styles.modalContent}>
+                        <span className={Styles.close} onClick={closeEditModal}>&times;</span>
+                        <h3>Editar Perfil</h3>
+                        <form onSubmit={handleEditSubmit} className={Styles.compactForm}>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Nuevo nombre de usuario"
+                                required
+                            />
+                            <input
+                                type="text"
+                                value={profilePicture}
+                                onChange={(e) => setProfilePicture(e.target.value)}
+                                placeholder="URL de la foto de perfil"
+                                required
+                            />
+                            <button type="submit">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            )}  
         </div>
     );
 }
