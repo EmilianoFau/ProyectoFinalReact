@@ -1,12 +1,15 @@
 import Styles from "./index.module.css";
+import { getElement } from "../../shared/server.jsx";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import Modal from "../Modal/modal.jsx";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function Profile() {
+export function Profile({ userId }) {
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
-    const { id } = useParams();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -18,22 +21,12 @@ export function Profile() {
                 return; 
             }
 
-            const response = await fetch(`http://localhost:3001/api/user/profile/${id}`, {
-                method:'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            
-            if (!response.ok) {
-              throw new Error('Error en la red al obtener el perfil');
-            }
-            const data = await response.json();
+            const data = await getElement('http://localhost:3001/api/user/profile', userId, token);
             setCurrentUser(data);
             console.log(data);
           } catch (err) {
             setError(err.message);
-            console.log(err);
+            console.log("Error: ", err);
           } finally {
             setLoading(false);
           }
@@ -46,12 +39,33 @@ export function Profile() {
         navigate('/MyFeed');
     }
 
+
+    const handleEditClick = () => {
+        setIsEditModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handleSaveProfile = (updatedProfile) => {
+        setCurrentUser((prevUser) => ({
+            ...prevUser,
+            user: { ...prevUser.user, ...updatedProfile },
+        }));
+        setIsEditModalOpen(false);
+    };
+
     return (
         <div>
             <div className={Styles.backButtonContainer}>
                 <button onClick={handleBackClick} className={Styles.backButton}>Back</button>
             </div>
-            {currentUser ? (
+            {loading ? (
+                <p className={Styles.loading}>Loading profile...</p>
+            ) : error ? (
+                <p className={Styles.error}>{error}</p>
+            ) : currentUser ? (
             <>            
             <div className={Styles.profileHeader}>
                 <div className={Styles.header}>
@@ -64,20 +78,33 @@ export function Profile() {
                     <h5>{currentUser.user.friends.length}</h5>
                     <span>Friends</span>
                 </div>
-                <div className={content}>
+                <div className={Styles.content}>
                     <p>{currentUser.user.username}</p>
                     <p>no existe pa</p>
                 </div>
                 <div className={Styles.editButton}>
-                    <button>Edit Profile</button>
+                    <button onClick={handleEditClick}>Edit Profile</button>
                 </div>
             </div>
             <div className={Styles.posts}>
-                
+            {currentUser.posts && currentUser.posts.length > 0 ? (
+            currentUser.posts.map((post, index) => (
+                <img key={index} src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} />
+            ))
+            ) : (
+                <p>No posts available</p>
+            )}
             </div>
+            {isEditModalOpen && (
+                <Modal
+                    currentUser={currentUser}
+                    onClose={handleModalClose}
+                    onSave={handleSaveProfile}
+                />
+            )}
             </>
             ) : (
-                <p className={Styles.loading}>Loading profile...</p>
+                <p className={Styles.loading}>No profile</p>
             )}
         </div>
     );

@@ -21,6 +21,9 @@ const Create = () => {
         formData.append("image", image);
         formData.append("caption", "Hola");
 
+        console.log(formData);
+        console.log(image);
+
         try {
             const token = localStorage.getItem("token");
             if (!token) {

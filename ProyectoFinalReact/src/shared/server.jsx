@@ -8,24 +8,26 @@ export async function getData(url, headers) {
     }
 }
 
-export async function getElement(url, id) {
+export async function getElement(url, id, token) {
     const elementUrl = `${url}/${id}`;
     try {
         const response = await fetch(elementUrl, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
         if (!response.ok) {
-            throw new Error(`Error fetching element: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`Error fetching element: ${response.status} - ${errorText}`);
         }
 
         console.log('Element fetched successfully');
 
-        const data = await response.text();
-        return data ? JSON.parse(data) : null;
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error('Error fetching element: ', error);
         throw error;

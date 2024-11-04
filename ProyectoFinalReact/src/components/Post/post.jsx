@@ -37,12 +37,14 @@ const Post = ({ post }) => {
         return seconds === 1 ? `1s` : `${seconds}s`;
     };
 
+    console.log(post);
+
     return(
         <div>
             <div className={Styles.postHeader}>
                 <h3 className={Styles.username}>{post.user.username} <p className={Styles.time}>· {timeAgo(post.createdAt)}</p></h3>
             </div>
-            <img src={post.imageUrl} alt={post.caption} className={Styles.postImage} />
+            <img src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} className={Styles.postImage} />
             <div className={Styles.icons}>
                 <Heart />
                 <MessageCircle/>
