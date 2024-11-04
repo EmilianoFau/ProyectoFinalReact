@@ -8,6 +8,7 @@ import Posts from "./components/Post/post.jsx";
 import Friends from "./components/Friends/friends";
 import Navbar from "./components/Navbar/navbar";
 import Create from "./components/Create/create.jsx";
+import Notifications from "./components/Notifications/notifications.jsx";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/MyProfile/Posts" element={<Posts />} />
             <Route path="/FriendProfile" element={<Friends userId={localStorage.getItem('profileId')}/>} />
             <Route path="/Create" element={<Create />} />
+            <Route path="/Notifications" element={<Notifications />} />
           </Routes>
       </UsersProvider>
     </PostsProvider>

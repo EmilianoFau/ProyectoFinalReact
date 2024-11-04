@@ -82,3 +82,11 @@ body {
     border: none;
     cursor: pointer;
 }
+
+@media (min-width: 768px) {
+    .container {
+        padding-left: 300px;
+        padding-bottom: 0;
+        width: calc(100vw - 350px)
+    }
+}
