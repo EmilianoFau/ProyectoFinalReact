@@ -11,26 +11,26 @@ const Navbar = () => {
             <h1 className={Styles.logo}>fakestagram</h1>
             <nav className={Styles.container}>
                 <ul>
-                    <li className={location.pathname === "/MyFeed" ? Styles.active : ""}>
-                        <Link to="/MyFeed">
+                <li className={location.pathname === "/MyFeed" ? Styles.active : ""}>
+                        <Link to="/MyFeed" className={Styles.link}>
                             <House />
                             <span className={Styles["nav-text"]}>&nbsp;&nbsp;Home</span>
                         </Link>
                     </li>
                     <li className={location.pathname === "/Notifications" ? Styles.active : ""}>
-                        <Link to="/Notifications">
+                        <Link to="/Notifications" className={Styles.link}>
                             <Heart />
                             <span className={Styles["nav-text"]}>&nbsp;&nbsp;Notifications</span>
                         </Link>
                     </li>
                     <li className={location.pathname === "/Create" ? Styles.active : ""}>
-                        <Link to="/Create">
+                        <Link to="/Create" className={Styles.link}>
                             <SquarePlus />
                             <span className={Styles["nav-text"]}>&nbsp;&nbsp;Create</span>
                         </Link>
                     </li>
                     <li className={location.pathname === "/MyProfile" ? Styles.active : ""}>
-                        <Link to="/MyProfile">
+                        <Link to="/MyProfile" className={Styles.link}>
                             <UserRound />
                             <span className={Styles["nav-text"]}>&nbsp;&nbsp;Profile</span>
                         </Link>

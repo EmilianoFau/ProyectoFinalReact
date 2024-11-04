@@ -97,7 +97,7 @@ export async function postData(url, data, token) {
     }
 }
 
-export async function postDataLogin(url, data, token) {
+export async function postDataApplicationJson(url, data, token) {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -105,7 +105,7 @@ export async function postDataLogin(url, data, token) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(data) 
+            body: data
         });
         const result = await response.json();
         return { response, result };
