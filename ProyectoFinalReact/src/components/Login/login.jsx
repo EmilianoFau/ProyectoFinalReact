@@ -28,7 +28,7 @@ const Login = () => {
         e.preventDefault();
         console.log("Email:", email);
         console.log("Password:", password);
-        const loginUser = convertToJson();
+        const loginUser = JSON.stringify(convertToJson())   ;
         try {
             const { response, result } = await postDataLogin('http://localhost:3001/api/auth/login', loginUser);
             console.log(response.status)

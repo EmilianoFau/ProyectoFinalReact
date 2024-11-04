@@ -20,7 +20,7 @@ const RegisterModal = ({ closeModal }) => {
 
     const handleAddUser = async (event) => {
         event.preventDefault();
-        const newUser = convertToJson();
+        const newUser = JSON.stringify(convertToJson());
 
         console.log('New user: ', newUser);
 
