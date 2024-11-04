@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "../RegisterModal/registerModal.jsx";
 import { useNavigate } from "react-router-dom";
 import Styles from "./login.module.css";
-import { getData, postDataLogin } from "../../shared/server.jsx";
+import { getData, postDataApplicationJson } from "../../shared/server.jsx";
 import { useUsers } from "../../contexts/users.jsx";
 
 const Login = () => {
@@ -28,9 +28,9 @@ const Login = () => {
         e.preventDefault();
         console.log("Email:", email);
         console.log("Password:", password);
-        const loginUser = JSON.stringify(convertToJson())   ;
+        const loginUser = JSON.stringify(convertToJson());
         try {
-            const { response, result } = await postDataLogin('http://localhost:3001/api/auth/login', loginUser);
+            const { response, result } = await postDataApplicationJson('http://localhost:3001/api/auth/login', loginUser);
             console.log(response.status)
             console.log(result);
             localStorage.setItem('profileId', result._id);
