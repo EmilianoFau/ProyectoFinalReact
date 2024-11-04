@@ -47,24 +47,30 @@ export function Profile({ userId }) {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <>
-            <div className={Styles.headers}>
-                <div className={Styles.username}>
-                    <h2>{userProfile.user.username}</h2>
-                </div>
+        <div className={Styles.container}>
+            <div className={Styles.backButtonContainer}>
+                <button onClick={handleBackClick} className={Styles.backButton}>Back</button>
             </div>
-            <div className={Styles.container}>
-                <div className={Styles.profileContainer}>
-                    <img src="" alt="Profile" />
-                    <div className={Styles.stats}>
-                        <h5>{userProfile.posts.length}</h5>
-                        <span>Posts</span>
-                        <h5>{userProfile.user.friends.length}</h5>
-                        <span>Friends</span>
-                    </div>
+            {loading ? (
+                <p className={Styles.loading}>Loading profile...</p>
+            ) : error ? (
+                <p className={Styles.error}>{error}</p>
+            ) : currentUser ? (
+            <>            
+            <div className={Styles.profileHeader}>
+                <div className={Styles.header}>
+                    <h2>{currentUser.user.username}</h2>
                 </div>
-                <div className={Styles.description}>
-                    <h4>description</h4>
+                <div className={Styles.stats}>
+                    <img src="" alt="Profile" />
+                    <div>
+                        <h5>{currentUser.posts.length}</h5>
+                        <span><small>Posts</small></span>
+                    </div>
+                    <div>
+                        <h5>{currentUser.user.friends.length}</h5>
+                        <span><small>Friends</small></span>
+                    </div>
                 </div>
                 <div className={Styles.edit}>
                     <button>Edit Profile</button>
@@ -80,7 +86,27 @@ export function Profile({ userId }) {
                     </button>
                 </div>
             </div>
-        </>
+            <div className={Styles.posts}>
+            {currentUser.posts && currentUser.posts.length > 0 ? (
+            currentUser.posts.map((post, index) => (
+                <img key={index} src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} className={Styles.post} />
+            ))
+            ) : (
+                <p>No posts available</p>
+            )}
+            </div>
+            {isEditModalOpen && (
+                <Modal
+                    currentUser={currentUser}
+                    onClose={handleModalClose}
+                    onSave={handleSaveProfile}
+                />
+            )}
+            </>
+            ) : (
+                <p className={Styles.loading}>No profile</p>
+            )}
+        </div>
     );
 }
 
