@@ -2,49 +2,56 @@ import Styles from "./index.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Profile() {
+export function Profile({ userId }) {
     const navigate = useNavigate();
 
-    const [currentUser, setCurrentUser] = useState(null);
-    const { id } = useParams();
+    const [userProfile, setUserProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [username, setUsername] = useState('');
+    const [profilePicture, setProfilePicture] = useState('');
 
     useEffect(() => {
         const fetchUserProfile = async () => {
-          try {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                console.error("No token found");
-                return; 
-            }
-
-            const response = await fetch(`http://localhost:3001/api/user/profile/${id}`, {
-                method:'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    console.error("No token found");
+                    return; 
                 }
-            });
-            
-            if (!response.ok) {
-              throw new Error('Error en la red al obtener el perfil');
+
+                const response = await fetch(`http://localhost:3001/api/user/profile/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la red al obtener el perfil');
+                }
+
+                const data = await response.json();
+                setUserProfile(data);
+                console.log(data);
+            } catch (err) {
+                setError(err.message);
+                console.log(err);
+            } finally {
+                setLoading(false);
             }
-            const data = await response.json();
-            setCurrentUser(data);
-            console.log(data);
-          } catch (err) {
-            setError(err.message);
-            console.log(err);
-          } finally {
-            setLoading(false);
-          }
         };
-    
+
         fetchUserProfile();
     }, [userId]);
 
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     const handleBackClick = () => {
         navigate('/MyFeed');
-    }
+    };
 
     const openEditModal = () => setShowEditModal(true);
     const closeEditModal = () => setShowEditModal(false);
@@ -65,57 +72,52 @@ export function Profile() {
                     profilePicture: profilePicture
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al actualizar el perfil');
             }
-    
+
             const data = await response.json();
-            setCurrentUser(data.user);
+            setUserProfile(data.user);
             closeEditModal();
             console.log(data.message);
         } catch (error) {
             console.error(error);
+            alert("Error al actualizar el perfil. Inténtalo de nuevo.");
         }
     };
-    
 
     return (
-        <div>
-            <div className={Styles.backButtonContainer}>
-                <button onClick={handleBackClick} className={Styles.backButton}>Back</button>
-            </div>
-            {currentUser ? (
-            <>            
-            <div className={Styles.profileHeader}>
-                <div className={Styles.header}>
-                    <h2>{currentUser.user.username}</h2>
-                </div>
-                <div className={Styles.info}>
-                    <img src="" alt="Profile" />
-                    <h5>{currentUser.posts.length}</h5>
-                    <span>Posts</span>
-                    <h5>{currentUser.user.friends.length}</h5>
-                    <span>Friends</span>
-                </div>
-                <div className={content}>
-                    <p>{currentUser.user.username}</p>
-                    <p>no existe pa</p>
-                </div>
-                <div className={Styles.editButton}>
-                    <button onClick={openEditModal()}>Edit Profile</button>
+        <>
+            <div className={Styles.headers}>
+                <div className={Styles.username}>
+                    <h2>{userProfile.user.username}</h2>
                 </div>
             </div>
-            <div className={Styles.posts}>
-                
+            <div className={Styles.container}>
+                <div className={Styles.profileContainer}>
+                    <img src={userProfile.user.profilePicture} alt="Profile" />
+                    <div className={Styles.stats}>
+                        <h5>{userProfile.posts.length}</h5>
+                        <span>Posts</span>
+                        <h5>{userProfile.user.friends.length}</h5>
+                        <span>Friends</span>
+                    </div>
+                </div>
+                <div className={Styles.description}>
+                    <h4>Description: {userProfile.user.description || "No description available"}</h4>
+                </div>
+                <div className={Styles.edit}>
+                    <div className={Styles.editButton}>
+                        <button onClick={openEditModal}>Edit Profile</button>
+                    </div>
+                </div>
+                <div className={Styles.bottomContainer}>
+                    <button onClick={handleBackClick}>Atrás</button>
+                </div>
             </div>
-            </>
-            ) : (
-                <p className={Styles.loading}>Loading profile...</p>
-            )}
 
-
-                {showEditModal && (
+            {showEditModal && (
                 <div className={Styles.modal}>
                     <div className={Styles.modalContent}>
                         <span className={Styles.close} onClick={closeEditModal}>&times;</span>
@@ -139,8 +141,9 @@ export function Profile() {
                         </form>
                     </div>
                 </div>
-            )}  
-        </div>
+            )}
+        </>
+        
     );
 }
 

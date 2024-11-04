@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useUsers } from "../../contexts/users";
-import { postDataLogin } from "../../shared/server";
+import { postDataApplicationJson } from "../../shared/server";
 import Styles from './index.module.css';
 
 const RegisterModal = ({ closeModal }) => {
@@ -20,12 +20,12 @@ const RegisterModal = ({ closeModal }) => {
 
     const handleAddUser = async (event) => {
         event.preventDefault();
-        const newUser = convertToJson();
+        const newUser = JSON.stringify(convertToJson());
 
         console.log('New user: ', newUser);
 
         try {
-            const { response, result } = await postDataLogin('http://localhost:3001/api/auth/register', newUser);
+            const { response, result } = await postDataApplicationJson('http://localhost:3001/api/auth/register', newUser);
             console.log(response);
             console.log(result);
             closeModal();
