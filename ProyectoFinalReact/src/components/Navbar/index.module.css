@@ -79,6 +79,7 @@ color: #ff007f;
 
   .nav-text {
     margin-left: 8px;
+    display: inline;
   }
 
   .navbar li {

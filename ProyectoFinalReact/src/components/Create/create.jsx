@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { postData } from "../../shared/server";
+import Styles from "./index.module.css";
 
 const Create = () => {
     const [image, setImage] = useState(null);
@@ -43,7 +44,7 @@ const Create = () => {
     };
 
     return (
-        <div>
+        <div className={Styles.container}>
             <h2>Upload Image</h2>
             <form onSubmit={handleSubmit}>
                 <input type="file" onChange={handleImageChange} accept="image/*" />
