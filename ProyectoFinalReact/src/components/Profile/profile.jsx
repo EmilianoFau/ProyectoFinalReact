@@ -2,11 +2,12 @@ import Styles from "./index.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Profile() {
+export function Profile({ userId }) {
     const navigate = useNavigate();
 
-    const [currentUser, setCurrentUser] = useState(null);
-    const { id } = useParams();
+    const [userProfile, setUserProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -18,7 +19,7 @@ export function Profile() {
                 return; 
             }
 
-            const response = await fetch(`http://localhost:3001/api/user/profile/${id}`, {
+            const response = await fetch(`http://localhost:3001/api/user/profile/${userId}`, {
                 method:'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -29,7 +30,7 @@ export function Profile() {
               throw new Error('Error en la red al obtener el perfil');
             }
             const data = await response.json();
-            setCurrentUser(data);
+            setUserProfile(data);
             console.log(data);
           } catch (err) {
             setError(err.message);
@@ -42,44 +43,44 @@ export function Profile() {
         fetchUserProfile();
     }, [userId]);
 
-    const handleBackClick = () => {
-        navigate('/MyFeed');
-    }
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
-            <div className={Styles.backButtonContainer}>
-                <button onClick={handleBackClick} className={Styles.backButton}>Back</button>
+        <>
+            <div className={Styles.headers}>
+                <div className={Styles.username}>
+                    <h2>{userProfile.user.username}</h2>
+                </div>
             </div>
-            {currentUser ? (
-            <>            
-            <div className={Styles.profileHeader}>
-                <div className={Styles.header}>
-                    <h2>{currentUser.user.username}</h2>
-                </div>
-                <div className={Styles.info}>
+            <div className={Styles.container}>
+                <div className={Styles.profileContainer}>
                     <img src="" alt="Profile" />
-                    <h5>{currentUser.posts.length}</h5>
-                    <span>Posts</span>
-                    <h5>{currentUser.user.friends.length}</h5>
-                    <span>Friends</span>
+                    <div className={Styles.stats}>
+                        <h5>{userProfile.posts.length}</h5>
+                        <span>Posts</span>
+                        <h5>{userProfile.user.friends.length}</h5>
+                        <span>Friends</span>
+                    </div>
                 </div>
-                <div className={content}>
-                    <p>{currentUser.user.username}</p>
-                    <p>no existe pa</p>
+                <div className={Styles.description}>
+                    <h4>description</h4>
                 </div>
-                <div className={Styles.editButton}>
+                <div className={Styles.edit}>
                     <button>Edit Profile</button>
                 </div>
+                <div className={Styles.postContainer}></div>
+                <div className={Styles.bottomContainer}>
+                    <button
+                        onClick={() => {
+                            navigate("/MyFeed");
+                        }}
+                    >
+                        Atras
+                    </button>
+                </div>
             </div>
-            <div className={Styles.posts}>
-                
-            </div>
-            </>
-            ) : (
-                <p className={Styles.loading}>Loading profile...</p>
-            )}
-        </div>
+        </>
     );
 }
 
