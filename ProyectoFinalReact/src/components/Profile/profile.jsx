@@ -39,7 +39,6 @@ export function Profile({ userId }) {
         navigate('/MyFeed');
     }
 
-
     const handleEditClick = () => {
         setIsEditModalOpen(true);
     };

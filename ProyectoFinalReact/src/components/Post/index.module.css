@@ -64,3 +64,23 @@
     color: #262626;
     line-height: 1.4;
 }
+
+.liked {
+    fill: red;
+}
+
+.animate {
+    animation: jump 0.5s ease forwards; 
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); 
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

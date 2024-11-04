@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { usePosts } from "../../contexts/posts";
-import { deleteData } from "../../shared/server";
+import { deleteData, postDataApplicationJson } from "../../shared/server";
 import { Heart, MessageCircle, Send, Bookmark, Ellipsis } from "lucide-react";
 import Styles from './index.module.css';
 
 const Post = ({ post }) => {   
-    const { posts, setPosts } = usePosts();
+    const [isLiked, setIsLiked] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const timeAgo = (timestamp) => {
         const now = new Date();
@@ -37,6 +38,24 @@ const Post = ({ post }) => {
         return seconds === 1 ? `1s` : `${seconds}s`;
     };
 
+    const handleLikeClick = async () => {
+        const postId = post.id;
+        const url = `/api/posts/${postId}/like`;
+
+        try {
+            if (isLiked) {
+                await deleteData(url); 
+            } else {
+                await postDataApplicationJson(url, JSON.stringify({}), token); 
+                setIsAnimating(true);
+                setTimeout(() => setIsAnimating(false), 500);
+            }
+            setIsLiked(!isLiked);
+        } catch (error) {
+            console.error("Error al manejar el like:", error);
+        }
+    };
+
     console.log(post);
 
     return(
@@ -46,7 +65,9 @@ const Post = ({ post }) => {
             </div>
             <img src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} className={Styles.postImage} />
             <div className={Styles.icons}>
-                <Heart />
+                <Heart 
+                    onClick={handleLikeClick} 
+                    className={`${isLiked ? Styles.liked : ''} ${isAnimating ? Styles.animate : ''}`} />
                 <MessageCircle/>
                 <Send/>
                 <Bookmark/>
