@@ -18,3 +18,16 @@
     padding: 16px; 
     width: 100%;
 }
+
+@media (min-width: 768px) {
+    .feedContainer {
+        padding-left: 300px;
+        padding-bottom: 0;
+        width: calc(100vw - 550px)
+    }
+
+    .feed {
+        height: 450px;
+        width: 450px;
+    }
+}
