@@ -26,8 +26,12 @@
         width: calc(100vw - 550px)
     }
 
-    .feed {
+    .post {
         height: 450px;
         width: 450px;
+    }
+
+    .feed {
+        margin-bottom: 150px
     }
 }
