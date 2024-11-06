@@ -1,14 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { usePosts } from "../../contexts/posts";
-import { deleteData, postDataApplicationJson } from "../../shared/server";
-import { Heart, MessageCircle, Send, Bookmark, Ellipsis } from "lucide-react";
+import { deleteData, postDataApplicationJson, getElement } from "../../shared/server";
+import { Heart, MessageCircle, Send, Bookmark, Ellipsis, ArrowUpToLine } from "lucide-react";
 import Styles from './index.module.css';
 import { apiURL } from "../const";
 
 const Post = ({ post }) => {   
     const [isLiked, setIsLiked] = useState(false);
+    const [activeComment, setActiveComment] = useState(false);
+    const [comment, setComment] = useState('');
     const [isAnimating, setIsAnimating] = useState(false);
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                console.error("No token found");
+                return; 
+            }
+
+            const postComments = post.comments;
+
+            console.log(postComments);
+
+            const commentPromises = postComments.map(async (commentId) => {
+                console.log(commentId);
+                const data = await getElement('http://localhost:3001/api/posts/comments', commentId, token);
+                return data;
+            });
+            
+            const commentsData = await Promise.all(commentPromises);
+    
+            setComments(commentsData);
+        };
+
+        fetchComments();
+    }, [setComment]);
+
+    console.log(comments);
 
     const timeAgo = (timestamp) => {
         const now = new Date();
@@ -42,7 +74,12 @@ const Post = ({ post }) => {
     const handleLikeClick = async () => {
         const postId = post.id;
         const url = `/api/posts/${postId}/like`;
+        const token = localStorage.getItem("token");
 
+        if (!token) {
+            console.error("No token found");
+            return; 
+        }
         try {
             if (isLiked) {
                 await deleteData(url); 
@@ -57,7 +94,28 @@ const Post = ({ post }) => {
         }
     };
 
+    const handleCommentClick = () => {
+        console.log(activeComment);
+        activeComment ? setActiveComment(false) : setActiveComment(true);
+        console.log(activeComment);
+    }
+
+    const submitComment = async () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            console.error("No token found");
+            return; 
+        }
+        const { response, result } = await postDataApplicationJson(`http://localhost:3001/api/posts/${post._id}/comments`, JSON.stringify({content: comment}), token);
+
+        setComment('');
+        setActiveComment(false);
+    }
+
     console.log(post);
+
+    console.log(comments);
 
     return(
         <div>
@@ -69,11 +127,35 @@ const Post = ({ post }) => {
                 <Heart 
                     onClick={handleLikeClick} 
                     className={`${isLiked ? Styles.liked : ''} ${isAnimating ? Styles.animate : ''}`} />
-                <MessageCircle/>
+                <MessageCircle
+                    onClick={handleCommentClick}
+                />
                 <Send/>
                 <Bookmark/>
             </div>
             <p className={Styles.caption}>{post.caption}</p>
+
+            <div className={`${activeComment ? '' : Styles.hideComment} ${Styles.commentBox}`}>
+                <input 
+                    type="text" 
+                    placeholder="Comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}></input>
+                <div>
+                    <ArrowUpToLine
+                        onClick={submitComment}
+                    />
+                </div>
+            </div>
+
+            <div>
+                {console.log(comments)}
+                    {comments.map(comment => (
+                    <div key={comment._id}>
+                        <i>{comment.user.username}</i> · {comment.content}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
