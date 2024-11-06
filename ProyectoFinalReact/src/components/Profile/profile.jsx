@@ -72,10 +72,15 @@ export function Profile({ userId }) {
                 </div>
                 <div className={Styles.info}>
                     <img src="" alt="Profile" />
-                    <h5>{currentUser.posts.length}</h5>
-                    <span>Posts</span>
-                    <h5>{currentUser.user.friends.length}</h5>
-                    <span>Friends</span>
+                    <div>
+                        <h5 className={Styles.headerNumber}>{currentUser.posts.length}</h5>
+                        <span>Posts</span>
+                    </div>
+                    <div>
+                        <h5 className={Styles.headerNumber}>{currentUser.user.friends.length}</h5>
+                        <span>Friends</span>
+                    </div>
+                    
                 </div>
                 <div className={Styles.content}>
                     <p>{currentUser.user.username}</p>
@@ -88,7 +93,7 @@ export function Profile({ userId }) {
             <div className={Styles.posts}>
             {currentUser.posts && currentUser.posts.length > 0 ? (
             currentUser.posts.map((post, index) => (
-                <img key={index} src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} />
+                <img key={index} src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} className={Styles.post} />
             ))
             ) : (
                 <p>No posts available</p>
