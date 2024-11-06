@@ -3,6 +3,7 @@ import { getData } from "../../shared/server.jsx";
 import { usePosts } from "../../contexts/posts.jsx";
 import Styles from './index.module.css';
 import Post from "../Post/post.jsx";
+import Card from "../Card/card.jsx";
 
 export function Feed() {
     const { posts, setPosts } = usePosts();
@@ -34,7 +35,7 @@ export function Feed() {
     }, []);
 
     return(
-
+        /*el Card es para hacer el carrusel de los usuarios*/
         
         <ul className={Styles.feedContainer}>
             {posts.map(post => (

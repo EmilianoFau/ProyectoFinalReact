@@ -4,6 +4,7 @@ import { usePosts } from "../../contexts/posts";
 import { deleteData, postDataApplicationJson } from "../../shared/server";
 import { Heart, MessageCircle, Send, Bookmark, Ellipsis } from "lucide-react";
 import Styles from './index.module.css';
+import { apiURL } from "../const";
 
 const Post = ({ post }) => {   
     const [isLiked, setIsLiked] = useState(false);
@@ -63,7 +64,7 @@ const Post = ({ post }) => {
             <div className={Styles.postHeader}>
                 <h3 className={Styles.username}>{post.user.username} <p className={Styles.time}>· {timeAgo(post.createdAt)}</p></h3>
             </div>
-            <img src={`http://localhost:3001/${post.imageUrl}`} alt={post.caption} className={Styles.postImage} />
+            <img src={`${apiURL}${post.imageUrl}`} alt={post.caption} className={Styles.postImage} />
             <div className={Styles.icons}>
                 <Heart 
                     onClick={handleLikeClick} 

@@ -58,13 +58,14 @@ export async function deleteData(url, id) {
     }
 }
 
-export async function putData(url, task) {
+export async function putData(url, data, token) {
     try {
         const response = await fetch(url, {
             method: 'PUT',
-            body: JSON.stringify(task),
+            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 

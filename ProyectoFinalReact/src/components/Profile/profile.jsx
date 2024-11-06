@@ -2,7 +2,7 @@ import Styles from "./index.module.css";
 import { getElement } from "../../shared/server.jsx";
 import { useState, useEffect } from "react";
 import Modal from "../Modal/modal.jsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Profile({ userId }) {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ export function Profile({ userId }) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     useEffect(() => {
-        const fetchUserProfile = async () => {
+        const loadData = async () => {
           try {
             const token = localStorage.getItem("token");
 
@@ -32,8 +32,8 @@ export function Profile({ userId }) {
           }
         };
     
-        fetchUserProfile();
-    }, [userId]);
+        loadData();
+    }, [userId, isEditModalOpen]);
 
     const handleBackClick = () => {
         navigate('/MyFeed');
@@ -44,14 +44,6 @@ export function Profile({ userId }) {
     };
 
     const handleModalClose = () => {
-        setIsEditModalOpen(false);
-    };
-
-    const handleSaveProfile = (updatedProfile) => {
-        setCurrentUser((prevUser) => ({
-            ...prevUser,
-            user: { ...prevUser.user, ...updatedProfile },
-        }));
         setIsEditModalOpen(false);
     };
 
@@ -103,7 +95,6 @@ export function Profile({ userId }) {
                 <Modal
                     currentUser={currentUser}
                     onClose={handleModalClose}
-                    onSave={handleSaveProfile}
                 />
             )}
             </>
