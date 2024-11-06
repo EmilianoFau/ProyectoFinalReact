@@ -37,7 +37,7 @@ export function Feed() {
 
         
         <ul className={Styles.feedContainer}>
-            {posts.map(post => (
+            {posts.map((post) => (
                 <li key={post._id} className={Styles.feed}>
                     <Post post={post} className={Styles.post}/>
                 </li>

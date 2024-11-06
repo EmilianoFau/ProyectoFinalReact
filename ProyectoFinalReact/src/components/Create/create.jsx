@@ -50,7 +50,7 @@ const Create = () => {
         <div className={Styles.container}>
             <h2>Upload Image</h2>
             <form onSubmit={handleSubmit}>
-                <input type="file" onChange={handleImageChange} accept="image/*" />
+                <small><input type="file" onChange={handleImageChange} accept="image/*" /></small>
                 <button type="submit">Upload Image</button>
             </form>
             {message && <p>{message}</p>}

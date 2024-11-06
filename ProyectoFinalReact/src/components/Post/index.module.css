@@ -74,6 +74,17 @@
     animation: jump 0.5s ease forwards; 
 }
 
+.hideComment {
+    display: none;
+}
+
+.commentBox {
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
 @keyframes jump {
     0% {
         transform: translateY(0);
