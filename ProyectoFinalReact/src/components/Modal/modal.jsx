@@ -52,7 +52,7 @@ const Modal = ({ currentUser, onClose }) => {
     return (
         <div className={Styles.modalOverlay}>
             <div className={Styles.modalContent}>
-                <h2>Edit Profile</h2>
+                <h2 className={Styles.modalTitle}>Edit Profile</h2>
                 <form onSubmit={handleEditUser}>
                     <label>
                         Name:
@@ -79,11 +79,20 @@ const Modal = ({ currentUser, onClose }) => {
                     </label>
                     <label>
                         Profile Image:
-                        <input type="file" onChange={handleImageChange} />
-                        {profileImage && <img src={profileImage} alt="Profile preview" className={Styles.imagePreview} />}
+                        <input type="file" id="fileInput" onChange={handleImageChange} />
+                        <span className={Styles.selectButton}>Select an image</span>
+                        <div className={Styles.imageContainer}>
+                            {profileImage ? (
+                                <img src={profileImage} alt="Profile preview" />
+                            ) : (
+                                <p className={Styles.noImage}>No image selected</p>
+                            )}
+                        </div>
                     </label>
-                    <button type="submit" className={Styles.saveButton}>Save</button>
-                    <button onClick={onClose} className={`${Styles.modalButton} ${Styles.cancelButton}`}>Cancel</button>
+                    <div className={Styles.buttonsContainer}>
+                        <button type="submit" className={Styles.modalButton}>Save</button>
+                        <button onClick={onClose} className={`${Styles.modalButton} ${Styles.cancelButton}`}>Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
