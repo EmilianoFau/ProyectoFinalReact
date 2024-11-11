@@ -23,6 +23,11 @@
     display: inline-block;
 }
 
+.usernameLink {
+    text-decoration: none;
+    color: black;
+}
+
 .time {
     font-size: 12px;
     color: #8e8e8e;
@@ -75,7 +80,7 @@
 }
 
 .hideComment {
-    display: none;
+    display: none !important;
 }
 
 .commentBox {

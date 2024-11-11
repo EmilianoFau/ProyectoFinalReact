@@ -7,6 +7,7 @@ import Card from "../Card/card.jsx";
 
 export function Feed() {
     const { posts, setPosts } = usePosts();
+    const [ shouldFetchPosts, setShouldFetchPosts ] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -31,16 +32,22 @@ export function Feed() {
             }
         };
 
-        fetchPosts();
-    }, []);
+        if (shouldFetchPosts) {
+            fetchPosts();
+            setShouldFetchPosts(false);
+          }
+    }, [shouldFetchPosts]);
+
+    const fetchPostsAgain = () => {
+        setShouldFetchPosts(true);
+    }
 
     return(
         /*el Card es para hacer el carrusel de los usuarios*/
-        
         <ul className={Styles.feedContainer}>
             {posts.map((post) => (
                 <li key={post._id} className={Styles.feed}>
-                    <Post post={post} className={Styles.post}/>
+                    <Post post={post} className={Styles.post} shouldFetchPostsAgain={fetchPostsAgain}/>
                 </li>
             ))}
         </ul>
