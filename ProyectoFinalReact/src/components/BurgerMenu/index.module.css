@@ -1,0 +1,26 @@
+.menu {
+    position: absolute;
+    top: 50px; 
+    right: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 20;
+}
+
+.menuItem {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    background-color: #f0f0f0;
+}

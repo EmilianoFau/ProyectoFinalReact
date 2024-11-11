@@ -5,6 +5,8 @@ import Login from "./components/Login/login";
 import Feed from "./components/Feed/feed";
 import Profile from "./components/Profile/profile";
 import Posts from "./components/Post/post.jsx";
+import Footer from "./components/Footer/footer";
+import Header from "./components/Header/header.jsx";
 import Friends from "./components/Friends/friends";
 import Navbar from "./components/Navbar/navbar";
 import Create from "./components/Create/create.jsx";
@@ -13,11 +15,13 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 
 function App() {
   const location = useLocation();
+  const isLoginPage = location.pathname === "/Login";
 
   return (
     <PostsProvider>
       <UsersProvider>
-        {location.pathname !== "/Login" && <Navbar />}
+          {!isLoginPage && <Navbar />}
+          {!isLoginPage && <Header />}
           <Routes>
             <Route path="/" element={<Navigate to="/Login"/>}/>
             <Route path="/Login" element={<Login />} />
@@ -28,6 +32,7 @@ function App() {
             <Route path="/Create" element={<Create />} />
             <Route path="/Notifications" element={<Notifications />} />
           </Routes>
+          {!isLoginPage && <Footer />}
       </UsersProvider>
     </PostsProvider>
   )

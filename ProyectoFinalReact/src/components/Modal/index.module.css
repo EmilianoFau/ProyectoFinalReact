@@ -9,6 +9,27 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    display: flex;
+}
+
+.modalTitle {
+    font-size: 1.5em;
+}
+
+input, textarea {
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    color: #333333;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #eeeeee;
+    transition: border-color 0.25s;
+}
+
+input:focus, textarea:focus {
+    border-color: #3c7fe0;
 }
 
 .modalContent {
@@ -16,34 +37,61 @@
     padding: 20px;
     border-radius: 8px;
     width: 300px;
+    
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 16px;
+.modalButton {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-family: inherit;
+    font-weight: 500;
+    background-color: rgb(3, 126, 48);
     cursor: pointer;
+    color: white;
+    transition: border-color 0.25s;
 }
 
-.saveButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.cancelButton {
+    background-color: red;
 }
 
-.imagePreview {
-    width: 100px;
-    height: 100px;
+.imageContainer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 120px;
+}
+
+.imageContainer img {
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 50%;
-    margin-top: 10px;
     object-fit: cover;
+}
+
+.imageContainer .noImage {
+    color: #aaa;
+    font-size: 1rem;
+    text-align: center;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 20px;
 }

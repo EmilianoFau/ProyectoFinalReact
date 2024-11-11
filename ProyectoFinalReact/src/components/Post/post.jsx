@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePosts } from "../../contexts/posts";
+import { apiURL } from "../const";
 import {
   deleteData,
   postDataApplicationJson,
@@ -188,11 +189,7 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
           <p className={Styles.time}>· {timeAgo(post.createdAt)}</p>
         </h3>
       </div>
-      <img
-        src={`http://localhost:3001/${post.imageUrl}`}
-        alt={post.caption}
-        className={Styles.postImage}
-      />
+      <img src={`${apiURL}${post.imageUrl}`} alt={post.caption} className={Styles.postImage} />
       <div className={Styles.icons}>
         <Heart
           onClick={handleLikeClick}

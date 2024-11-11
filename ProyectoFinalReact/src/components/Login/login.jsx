@@ -55,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className={Styles.loginContainer}>
             <form onSubmit={handleSubmit} className={Styles.loginForm}>
                 <label htmlFor="email">Email:</label>
                 <input
@@ -63,6 +63,7 @@ const Login = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className={Styles.loginInput}
                 />
                 <label htmlFor="password">Password:</label>
                 <input
@@ -70,10 +71,11 @@ const Login = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className={Styles.loginInput}
                 />
-                <button type="submit">Login</button>
+                <button type="submit" className={Styles.loginButton}>Login</button>
                 <div className={Styles.wrongPassword}>{showWrongPassword ? `Wrong email and/or password` : null}</div>
-                <button onClick={handleRegistration}>Register</button>
+                <button onClick={handleRegistration} className={Styles.registerButton}>Register</button>
             </form>
             {openRegisterModal && <Modal closeModal={closeModal} />}
         </div>
