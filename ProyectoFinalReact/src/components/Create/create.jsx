@@ -48,12 +48,12 @@ const Create = () => {
 
     return (
         <div className={Styles.container}>
-            <h2>Upload Image</h2>
+            <h2 className={Styles.heading}>Upload Image</h2>
             <form onSubmit={handleSubmit}>
-                <small><input type="file" onChange={handleImageChange} accept="image/*" /></small>
-                <button type="submit">Upload Image</button>
+                <small className={Styles.inputWrapper}><input type="file" onChange={handleImageChange} accept="image/*" className={Styles.inputFile} /></small>
+                <button type="submit" className={Styles.submitButton}>Upload Image</button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className={Styles.message}>{message}</p>}
         </div>
     );
 };

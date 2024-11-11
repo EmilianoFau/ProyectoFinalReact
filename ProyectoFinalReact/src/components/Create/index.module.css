@@ -1,7 +1,77 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    height: 100vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto 20px 0;
+}
+
+.heading {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.inputWrapper {
+    font-size: 14px;
+    display: flex;
+    width: 100%;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.inputFile {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submitButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.submitButton:hover {
+    background-color: #45a049;
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #d9534f;
+    text-align: center;
+}
+
 @media (min-width: 768px) {
     .container {
-        padding-left: 300px;
-        padding-bottom: 0;
-        width: calc(100vw - 350px)
+        max-width: 500px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+
+    .inputFile {
+        width: auto;
+    }
+
+    .submitButton {
+        width: auto;
     }
 }
+
