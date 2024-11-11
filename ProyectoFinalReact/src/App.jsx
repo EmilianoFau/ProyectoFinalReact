@@ -24,7 +24,7 @@ function App() {
             <Route path="/MyFeed" element={<Feed />} />
             <Route path="/MyProfile" element={<Profile userId={localStorage.getItem('profileId')}/>} />
             <Route path="/MyProfile/Posts" element={<Posts />} />
-            <Route path="/FriendProfile" element={<Friends userId={localStorage.getItem('profileId')}/>} />
+            <Route path="/FriendProfile" element={<Friends userId={localStorage.getItem('friendId')}/>} />
             <Route path="/Create" element={<Create />} />
             <Route path="/Notifications" element={<Notifications />} />
           </Routes>

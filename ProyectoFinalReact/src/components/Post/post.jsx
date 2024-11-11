@@ -24,6 +24,7 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [comments, setComments] = useState([]);
   const [shouldFetchComments, setShouldFetchComments] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -164,6 +165,16 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
     }
   };
 
+  const goToPostProfile = () => {
+    if (post.user._id == localStorage.getItem('profileId')) {
+        navigate('/MyProfile');
+    }
+    else {
+        localStorage.setItem('friendId', post.user._id);
+        navigate('/FriendProfile');
+    }
+  };
+
   console.log(post);
 
   console.log(comments);
@@ -172,7 +183,8 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
     <div>
       <div className={Styles.postHeader}>
         <h3 className={Styles.username}>
-          {post.user.username}{" "}
+          <span className={Styles.usernameLink} onClick={goToPostProfile} >{post.user.username}</span>
+
           <p className={Styles.time}>· {timeAgo(post.createdAt)}</p>
         </h3>
       </div>
