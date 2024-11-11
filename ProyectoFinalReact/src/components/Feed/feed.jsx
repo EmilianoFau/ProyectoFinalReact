@@ -38,9 +38,9 @@ export function Feed() {
         /*el Card es para hacer el carrusel de los usuarios*/
         
         <ul className={Styles.feedContainer}>
-            {posts.map(post => (
+            {posts.map((post) => (
                 <li key={post._id} className={Styles.feed}>
-                    <Post post={post} />
+                    <Post post={post} className={Styles.post}/>
                 </li>
             ))}
         </ul>
