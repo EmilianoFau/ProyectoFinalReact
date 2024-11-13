@@ -58,6 +58,31 @@ export async function deleteData(url, id) {
     }
 }
 
+export async function deleteDataWithToken(url, id, token) {
+    const deleteUrl = `${url}/${id}`;
+    try {
+        const response = await fetch(deleteUrl, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error deleting: ${response.status}`);
+        }
+
+        console.log('Element deleted successfully');
+
+        const data = await response.text();
+        return data ? JSON.parse(data) : null;
+    } catch (error) {
+        console.error('Error deleting element: ', error);
+        throw error;
+    }
+}
+
 export async function putData(url, data, token) {
     try {
         const response = await fetch(url, {
