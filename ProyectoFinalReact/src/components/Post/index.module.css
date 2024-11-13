@@ -26,6 +26,7 @@
 .usernameLink {
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 
 .time {
