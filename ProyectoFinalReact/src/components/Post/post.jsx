@@ -29,7 +29,6 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
 
   useEffect(() => {
     const fetchComments = async () => {
-      console.log("empiezoooo");
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -37,14 +36,17 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
         return;
       }
 
-      await shouldFetchPostsAgain;
+      const data = await getData('http://localhost:3001/api/posts/feed', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      });
 
-      const postComments = post.comments;
+      const currentPost = data.filter((p) => p._id === post._id)[0];
 
-      console.log(postComments);
+      const postComments = currentPost.comments;
 
       const commentPromises = postComments.map(async (comment) => {
-        console.log(comment._id);
         const data = await getElement(
           "http://localhost:3001/api/posts/comments",
           comment._id,
@@ -56,18 +58,13 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
       const commentsData = await Promise.all(commentPromises);
 
       setComments(commentsData);
-      console.log("se actualizaron los comentarios");
     };
 
     if (shouldFetchComments) {
       fetchComments();
       setShouldFetchComments(false);
     }
-
-    console.log("terminoooo");
-  }, [shouldFetchComments, post]);
-
-  console.log(comments);
+  }, [post, shouldFetchComments]);
 
   const timeAgo = (timestamp) => {
     const now = new Date();
@@ -122,9 +119,7 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
   };
 
   const handleCommentClick = () => {
-    console.log(activeComment);
     activeComment ? setActiveComment(false) : setActiveComment(true);
-    console.log(activeComment);
   };
 
   const submitComment = async () => {
@@ -136,27 +131,11 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
     }
 
     try {
-      // Realizar el POST request para agregar el comentario
-      await postDataApplicationJson(
+      const newComment = await postDataApplicationJson(
         `http://localhost:3001/api/posts/${post._id}/comments`,
         JSON.stringify({ content: comment }),
         token
       );
-
-      // Obtener la lista actualizada de comentarios
-      const updatedComments = await Promise.all(
-        post.comments.map(async (comment) => {
-          const data = await getElement(
-            "http://localhost:3001/api/posts/comments",
-            comment._id,
-            token
-          );
-          return data;
-        })
-      );
-
-      setComments(updatedComments);
-
       setComment("");
       setActiveComment(false);
 
@@ -175,10 +154,6 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
         navigate('/FriendProfile');
     }
   };
-
-  console.log(post);
-
-  console.log(comments);
 
   return (
     <div>
@@ -220,7 +195,6 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
       </div>
 
       <div>
-        {console.log(comments)}
         {comments.map((comment) => (
           <div key={comment._id}>
             <i>{comment.user.username}</i> · {comment.content}

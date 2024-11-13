@@ -9,38 +9,34 @@ export function Feed() {
     const { posts, setPosts } = usePosts();
     const [ shouldFetchPosts, setShouldFetchPosts ] = useState(true);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const token = localStorage.getItem("token");
+    const fetchPosts = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-                if (!token) {
-                    console.error("No token found");
-                    return; 
-                }
-
-                const data = await getData('http://localhost:3001/api/posts/feed', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                console.log(data);
-                setPosts(data);
-            } catch (error) {
-                console.error("Error fetching posts:", error);
+            if (!token) {
+                console.error("No token found");
+                return; 
             }
-        };
 
-        if (shouldFetchPosts) {
-            fetchPosts();
-            setShouldFetchPosts(false);
-          }
-    }, [shouldFetchPosts]);
+            const data = await getData('http://localhost:3001/api/posts/feed', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            setPosts(data);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
 
     const fetchPostsAgain = () => {
-        setShouldFetchPosts(true);
-    }
+        fetchPosts();
+    };
 
     return(
         /*el Card es para hacer el carrusel de los usuarios*/
