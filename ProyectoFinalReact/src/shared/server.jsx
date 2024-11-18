@@ -58,10 +58,9 @@ export async function deleteData(url, id) {
     }
 }
 
-export async function deleteDataWithToken(url, id, token) {
-    const deleteUrl = `${url}/${id}`;
+export async function deleteDataWithToken(url, token) {
     try {
-        const response = await fetch(deleteUrl, {
+        const response = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

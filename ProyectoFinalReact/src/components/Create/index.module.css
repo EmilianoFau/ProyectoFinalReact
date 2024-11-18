@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f9;
+    background-color: white;
     border-radius: 8px;
-    height: 100vh;
+    height: calc(100vh - 50px);
+    margin: 50px auto 20px auto; 
+    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    margin: 0 auto 20px 0;
 }
 
 .heading {
@@ -60,6 +61,8 @@
 @media (min-width: 768px) {
     .container {
         max-width: 500px;
+        margin: 50px auto 20px 360px;
+        padding: 30px;
     }
 
     .heading {
@@ -72,6 +75,14 @@
 
     .submitButton {
         width: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        height: 100vh; 
+        width: calc(100% - 260px);
+        margin: 50px auto 20px auto;
     }
 }
 

@@ -7,6 +7,7 @@ import {
   postDataApplicationJson,
   getElement,
   getData,
+  deleteDataWithToken,
 } from "../../shared/server";
 import {
   Heart,
@@ -96,25 +97,27 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
   };
 
   const handleLikeClick = async () => {
-    const postId = post._id;
-    const url = `/api/posts/${postId}/like`;
     const token = localStorage.getItem("token");
 
     if (!token) {
       console.error("No token found");
       return;
     }
+
     try {
       if (isLiked) {
-        await deleteData(url);
+        await deleteDataWithToken(`http://localhost:3001/api/posts/${post._id}/like`, token);
+        setIsLiked(false);
       } else {
-        await postDataApplicationJson(url, JSON.stringify({}), token);
-        setIsAnimating(true);
-        setTimeout(() => setIsAnimating(false), 500);
+        await postDataApplicationJson(
+          `http://localhost:3001/api/posts/${post._id}/like`,
+          null,
+          token
+        );
+        setIsLiked(true);
       }
-      setIsLiked(!isLiked);
     } catch (error) {
-      console.error("Error al manejar el like:", error);
+      console.error("Error while fetching like", error);
     }
   };
 
@@ -156,7 +159,7 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
   };
 
   return (
-    <div>
+    <div className={Styles.post}>
       <div className={Styles.postHeader}>
         <h3 className={Styles.username}>
           <span className={Styles.usernameLink} onClick={goToPostProfile} >{post.user.username}</span>
@@ -168,6 +171,7 @@ const Post = ({ post, shouldFetchPostsAgain }) => {
       <div className={Styles.icons}>
         <Heart
           onClick={handleLikeClick}
+          color={isLiked ? "red" : "gray"}
           className={`${isLiked ? Styles.liked : ""} ${
             isAnimating ? Styles.animate : ""
           }`}

@@ -71,7 +71,7 @@ export function Profile({ userId }) {
       setIsFollowing(true);
     } else {
       const data = await deleteDataWithToken(
-        `http://localhost:3001/api/user/remove-friend`, userId, token
+        `http://localhost:3001/api/user/remove-friend/${userId}`, token
       );
 
       setIsFollowing(false);
