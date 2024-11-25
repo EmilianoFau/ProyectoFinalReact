@@ -1,6 +1,7 @@
 import React from "react";
 import { UsersProvider } from "./contexts/users";
 import { PostsProvider } from "./contexts/posts";
+import { NotificationsProvider } from "./contexts/notifications";
 import Login from "./components/Login/login";
 import Feed from "./components/Feed/feed";
 import Profile from "./components/Profile/profile";
@@ -20,6 +21,7 @@ function App() {
   return (
     <PostsProvider>
       <UsersProvider>
+        <NotificationsProvider>
           {!isLoginPage && <Navbar />}
           {!isLoginPage && <Header />}
           <Routes>
@@ -33,6 +35,7 @@ function App() {
             <Route path="/Notifications" element={<Notifications />} />
           </Routes>
           {!isLoginPage && <Footer />}
+        </NotificationsProvider>
       </UsersProvider>
     </PostsProvider>
   )
